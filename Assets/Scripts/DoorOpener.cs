@@ -7,23 +7,34 @@ public class DoorOpener : MonoBehaviour
     [SerializeField] private AudioSource _backgroundMusicSource;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private KeyCode _openKey = KeyCode.E;
-    [SerializeField] private Transform _playerTransform;
-    [SerializeField] private float _openDistance = 1f;
     [SerializeField] private Alarmer _alarmer;
     private bool _isOpened = false;
     private bool _isAlarmOn = false;
+    private bool _isPlayerInZone = false;
 
     private void Update()
     {
-        float distance = Vector2.Distance(transform.position, _playerTransform.position);
-
-        if (!_isOpened && distance <= _openDistance && Input.GetKeyDown(_openKey))
+        if (!_isOpened && _isPlayerInZone && Input.GetKeyDown(_openKey))
             OpenDoor();
-        
-        if (_isAlarmOn && distance > _openDistance)
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!_isOpened && other.GetComponent<Robber>() != null)
+            _isPlayerInZone = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (_isAlarmOn && other.GetComponent<Robber>() != null)
         {
-            _alarmer.StopAlarm();
-            _isAlarmOn = false;
+            _isPlayerInZone = false;
+
+            if (_isAlarmOn)
+            {
+                _alarmer.StopAlarm();
+                _isAlarmOn = false;
+            }
         }
     }
 
