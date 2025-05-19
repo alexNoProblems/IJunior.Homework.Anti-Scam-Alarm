@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class Detector : MonoBehaviour
 {
+    public event Action OnRobberExited;
     private bool _hasRobberInZone = false;
 
     public bool HasRobber => _hasRobberInZone;
@@ -15,6 +17,10 @@ public class Detector : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.GetComponent<Robber>() != null)
+        {
             _hasRobberInZone = false;
+            OnRobberExited?.Invoke();
+        }
+            
     }
 }

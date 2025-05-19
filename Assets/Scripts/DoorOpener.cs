@@ -13,10 +13,20 @@ public class DoorOpener : MonoBehaviour
     private bool _isOpened = false;
     private bool _isAlarmOn = false;
 
+    private void Start()
+    {
+        _detector.OnRobberExited += HandleRobberExit;
+    }
+
     private void Update()
     {
         if (!_isOpened && _detector.HasRobber && _inputReader.IsOpenKeyPressed)
             OpenDoor();
+    }
+
+    private void OnDestroy()
+    {
+        _detector.OnRobberExited -= HandleRobberExit;
     }
 
     private IEnumerator WaitAndStartAlarm()
@@ -25,16 +35,6 @@ public class DoorOpener : MonoBehaviour
 
         _alarmer.StartAlarm();
     }
-
-    public void StopAlarm()
-    {
-        if (_isAlarmOn)
-        {
-            _alarmer.StopAlarm();
-            _isAlarmOn = false;
-        }
-    }
-
     private void OpenDoor()
     {
         _doorAudioSource?.Play();
@@ -45,6 +45,15 @@ public class DoorOpener : MonoBehaviour
         {
             StartCoroutine(WaitAndStartAlarm());
             _isAlarmOn = true;
+        }
+    }
+
+    private void HandleRobberExit()
+    {
+        if (_isAlarmOn)
+        {
+            _alarmer.StopAlarm();
+            _isAlarmOn = false;
         }
     }
 }
