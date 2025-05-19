@@ -8,13 +8,11 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private InputReader _inputReader;
 
     private Rigidbody2D _rigidbody2D;
+    private bool _wasWalking;
 
     private void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-
-        if (_playerAnimator == null)
-            Debug.LogWarning($"[{nameof(PlayerMover)}] PlayerAnimator не найден у дочерних объектов {gameObject.name}");
     }
 
     private void Update()
@@ -39,6 +37,11 @@ public class PlayerMover : MonoBehaviour
     private void UpdateAnimation()
     {
         bool isWalking = _inputReader.Movement != Vector2.zero;
-        _playerAnimator.SetWalking(isWalking);
+
+        if (_wasWalking != isWalking)
+        {
+            _playerAnimator.SetWalking(isWalking);
+            _wasWalking = isWalking;
+        }
     }
 }

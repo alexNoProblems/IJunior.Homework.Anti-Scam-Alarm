@@ -478,6 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a1067f67a304ed19336e3290286f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _openKey: 101
 --- !u!1 &1238242563
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,6 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1238242565}
   - component: {fileID: 1238242564}
+  - component: {fileID: 1238242569}
   - component: {fileID: 1238242567}
   - component: {fileID: 1238242566}
   - component: {fileID: 1238242568}
@@ -676,8 +678,9 @@ MonoBehaviour:
   _doorAudioSource: {fileID: 1238242566}
   _backgroundMusicSource: {fileID: 810733647}
   _spriteRenderer: {fileID: 1238242564}
-  _openKey: 101
   _alarmer: {fileID: 1244832439}
+  _inputReader: {fileID: 970653506}
+  _detector: {fileID: 1238242569}
 --- !u!61 &1238242568
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -723,6 +726,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.22, y: 2.2}
   m_EdgeRadius: 0
+--- !u!114 &1238242569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238242563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e79f47dc035464c01ac1d25b2a5b38bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1244832436
 GameObject:
   m_ObjectHideFlags: 0
